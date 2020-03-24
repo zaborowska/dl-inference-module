@@ -33,5 +33,5 @@
 
 #
 all/*
-module/ensemble/build/*
+**/build/*
 event*.txt
