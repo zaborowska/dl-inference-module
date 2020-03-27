@@ -8,6 +8,7 @@
 #include <sstream> 
 #include <fstream>
 #include <stdio.h>
+#include <functional>
 
 
 class DLInference {
@@ -16,6 +17,7 @@ public:
     auto generation();
 
 private:
+
     std::string modelType;
     int energyValue;
     std::string modelGraph;
@@ -29,7 +31,10 @@ private:
     int labelSize;
     int inputVecNumber;
     std::vector<int64_t> inputShape;
-    std::vector<int64_t> outputShape;
+    std::vector<int64_t> labelShape;
+
+    std::string outFileName;
+
 };
 
 
@@ -51,11 +56,13 @@ void DLInference::initialization() {
     labelNode  = "y_input";
     outputNode = "generator/gen_output";
     
-
-    inputSize = 6400;
-    labelSize = 640;
     inputShape = {64,100};
-    outputShape = {64,10};
+    labelShape = {64,10};
+
+    inputSize = std::accumulate(begin(inputShape), end(inputShape), 1, std::multiplies<>());
+    labelSize = std::accumulate(begin(labelShape), end(labelShape), 1, std::multiplies<>());
+
+    // outFileName = "./event" + modelType + std::to_string(energyValue) + ".txt";
 
 };
 
@@ -82,7 +89,7 @@ auto DLInference::generation() {
 
 
     inputData->set_data(inputVec, inputShape);
-    eventEnergy->set_data(energies, outputShape );
+    eventEnergy->set_data(energies, labelShape);
 
     m.run({inputData,eventEnergy}, generatedEvent);
 
@@ -106,7 +113,8 @@ int main(int argc,char **argv) {
 
     // Stream Event to File
 
-    std::ofstream outFile("./eventDCgan.txt");
+    std::ofstream outFile("eventDCGAN.txt");
+
        for (const auto &e : result) outFile << e << "\n";
     return 0;
 };
