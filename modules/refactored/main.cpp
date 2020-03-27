@@ -15,7 +15,7 @@ int main(int argc,char **argv) {
 
     session.init();
 
-    std::vector<float> result = session.generation();
+    auto result = session.generation();
 
     for (auto it = result.begin() ; it != result.end(); ++it) 
         std::cout  << *it <<" , "<< std::endl;
