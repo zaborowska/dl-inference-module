@@ -12,9 +12,7 @@
 int main(int argc,char **argv) {
     
     DLInference session; 
-
     session.init();
-
     auto result = session.generation();
 
     for (auto it = result.begin() ; it != result.end(); ++it) 

@@ -23,7 +23,6 @@ make .
 
 where `modelChoice` can be either `dcgan` , `cvae`, `ar`
 
-
 ## How To Integrate Your Model 
 
 1. Save your input/output node names. For example, given a Python model:
@@ -56,3 +55,6 @@ outputNode      = "output_result"
 inputShape      = {64,8,8,24}
 labelShape      = {64,100}
 ```
+
+
+
