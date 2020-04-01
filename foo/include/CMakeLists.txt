@@ -1,5 +1,5 @@
-set(FILES "${CMAKE_CURRENT_SOURCE_DIR}/DLInference.h", "${CMAKE_CURRENT_SOURCE_DIR}/Tensor.h","${CMAKE_CURRENT_SOURCE_DIR}/Model.h")
-set(SUBDIRECTORIES "tensorflow")
+set(FILES "")
+set(SUBDIRECTORIES "Foo")
 set(RELATIVE_PATH "include")
 
 #Add all subdirectories 

@@ -1,5 +1,5 @@
-set(FILES "${CMAKE_CURRENT_SOURCE_DIR}/DLInference.cpp", "${CMAKE_CURRENT_SOURCE_DIR}/Tensor.cpp","${CMAKE_CURRENT_SOURCE_DIR}/Model.cpp")
-set(SUBDIRECTORIES "")
+set(FILES "")
+set(SUBDIRECTORIES "Foo")
 set(RELATIVE_PATH "src")
 
 #Add all subdirectories 
