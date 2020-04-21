@@ -1,6 +1,6 @@
-#include "../../foo/include/DLInference.h"
-#include "../../foo/include/Model.h"
-#include "../../foo/include/Tensor.h"
+#include "../foo/include/Foo/DLInference.h"
+#include "../foo/include/Foo/Model.h"
+#include "../foo/include/Foo/Tensor.h"
 #include <algorithm>
 #include <iterator>
 #include <numeric>
