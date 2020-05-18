@@ -69,3 +69,12 @@ std::vector<float> DLInference::generation() {
 
     return result;
 }
+
+void DLInference::SetModelGraph(const std::string &aModelGraph)
+{
+    modelGraph = aModelGraph;
+}
+void DLInference::SetModelRestore(const std::string &aModelRestore)
+{
+    modelRestore = aModelRestore;
+}

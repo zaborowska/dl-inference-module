@@ -20,6 +20,8 @@ public:
 
     void init();
     std::vector<float> generation();
+    void SetModelGraph(const std::string& aModelGraph);
+    void SetModelRestore(const std::string& aModelRestore);
 
 private:
 
