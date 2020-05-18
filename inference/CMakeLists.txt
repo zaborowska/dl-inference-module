@@ -1,30 +1,47 @@
-add_library("${PROJECT_NAME}" "")
-add_library(Foo::Foo ALIAS "${PROJECT_NAME}")
+#----------------------------------------------------------------------------
+# Setup the project
+cmake_minimum_required(VERSION 3.10)
+project(InferenceLib VERSION 0.1)
 
-target_include_directories("${PROJECT_NAME}" PUBLIC
-	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-	"$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>" #foo_export.h
-	"$<INSTALL_INTERFACE:include>" #${CMAKE_INSTALL_PREFIX}/include
-)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DDROP_CGAL ${CPP17FLAGS} -Wall -Wextra -Wpedantic -Wno-unused-variable -Wno-unused-parameter")
 
-if(NOT BUILD_SHARED_LIBS)
-	set(STATIC_POSTFIX "-s")
-	set_target_properties("${PROJECT_NAME}" PROPERTIES 
-	COMPILE_FLAGS -DFOO_STATIC_DEFINE)
-endif()
+if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+  message(SEND_ERROR "In-source builds are not allowed.")
+endif ()
 
-#Rename target Foo
-set_target_properties("${PROJECT_NAME}" PROPERTIES
-	DEBUG_POSTFIX "${STATIC_POSTFIX}-d" 
-	RELEASE_POSTFIX "${STATIC_POSTFIX}"
-	MINSIZEREL_POSTFIX "${STATIC_POSTFIX}-mr"
-	RELWITHDEBINFO_POSTFIX "${STATIC_POSTFIX}-rd"
-)
+#----------------------------------------------------------------------------
+# Setup required TensorFlow dependency
+#
+find_package(TensorFlow REQUIRED)
 
-include("GenerateExportHeader")
-generate_export_header("${PROJECT_NAME}")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/foo_export.h" DESTINATION "include")
+#----------------------------------------------------------------------------
+# Locate sources and headers for this project
+#
+include_directories(${PROJECT_SOURCE_DIR}/include/
+                    ${TensorFlow_INCLUDE_DIR})
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h)
 
+#----------------------------------------------------------------------------
+# Add the library, correctly setup the include directories, and link the library to the TensorFlow libraries
+#
+add_library(${PROJECT_NAME} SHARED ${sources})
+target_include_directories(${PROJECT_NAME} PUBLIC ${TensorFlow_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include> PRIVATE src)
+target_link_directories(${PROJECT_NAME} PUBLIC ${TensorFlow_LIBRARY_DIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC tensorflow tensorflow_framework)
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
 
-add_subdirectory("include")
-add_subdirectory("src")
+#----------------------------------------------------------------------------
+# Install the library, headers, config, and models to directories under CMAKE_INSTALL_PREFIX
+#
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Config LIBRARY DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include)
+
+install(EXPORT ${PROJECT_NAME}Config DESTINATION cmake)
+export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Config.cmake)
+
+install(FILES ../modules/dcgan.pb ../modules/cvae.pb ../modules/graphPx.pb DESTINATION networks)
+install(FILES ../modules/checkpoint/model.b64.ckpt.data-00000-of-00001 ../modules/checkpoint/model.b64.ckpt.meta
+              ../modules/checkpoint/model.b64.ckpt.index DESTINATION networks)
