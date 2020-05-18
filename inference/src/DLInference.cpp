@@ -7,7 +7,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <functional>
-#include "./DLInference.h"
+#include "DLInference.h"
 
 void DLInference::init() {
 
@@ -35,7 +35,7 @@ void DLInference::init() {
 
     // outFileName = "./event" + modelType + std::to_string(energyValue) + ".txt";
 
-};
+}
 
 
 std::vector<float> DLInference::generation() {
@@ -68,10 +68,4 @@ std::vector<float> DLInference::generation() {
     std::vector<float> result = generatedEvent->get_data<float>();
 
     return result;
-};
-
-
-
-
-
-
+}
