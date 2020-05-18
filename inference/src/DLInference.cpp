@@ -1,13 +1,6 @@
-#include <algorithm>
-#include <iterator>
-#include <numeric>
-#include <iomanip>
-#include <vector>
-#include <sstream> 
-#include <fstream>
-#include <stdio.h>
-#include <functional>
 #include "DLInference.h"
+#include "Model.h"
+#include "Tensor.h"
 
 void DLInference::init() {
 
