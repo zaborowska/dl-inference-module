@@ -33,6 +33,4 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
     endif()
 endif()
 
-add_subdirectory("foo")
-
 add_subdirectory("modules")
