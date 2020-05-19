@@ -23,10 +23,17 @@ cmake .. -DCMAKE_PREFIX_PATH=<TENSORFLOW_PATH> -DCMAKE_INSTALL_PREFIX=../install
 make install
 ```
 
-with cvmfs (on lxplus):
+with cvmfs (on lxplus = centos7):
 ```
 source /cvmfs/sft.cern.ch/lcg/contrib/gcc/9.2.0/x86_64-centos7-gcc9-opt/setup.sh
 cmake3 .. -DCMAKE_PREFIX_PATH=/cvmfs/sft.cern.ch/lcg/releases/LCG_96b/tensorflow/1.14.0/x86_64-centos7-gcc9-opt  -DCMAKE_INSTALL_PREFIX=../install
+make install
+```
+
+with cvmfs (on lxplus8 = centos8):
+```
+source /cvmfs/sft.cern.ch/lcg/contrib/gcc/9.2.0/x86_64-centos7-gcc9-opt/setup.sh
+/cvmfs/sft.cern.ch/lcg/contrib/CMake/3.14.2/Linux-x86_64/bin/cmake .. -DCMAKE_PREFIX_PATH=/cvmfs/sft.cern.ch/lcg/releases/LCG_96b/tensorflow/1.14.0/x86_64-centos7-gcc9-opt  -DCMAKE_INSTALL_PREFIX=../install
 make install
 ```
 
