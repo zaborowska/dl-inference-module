@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
-
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_PREFIX_PATH}/cmake)
+find_package(InferenceLib)
 add_executable("Example" "Main.cpp")
-target_link_libraries("Example" PRIVATE Foo::Foo L/../modules/all/  -ltensorflow)
+target_link_libraries("Example" InferenceLib)

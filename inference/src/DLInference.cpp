@@ -13,15 +13,15 @@ void DLInference::init() {
     inputVecNumber = 5;
    // energy >> energyValue; 
 
-    modelGraph = "../dcgan.pb" ;
-    modelRestore = "../checkpoint/model.b64.ckpt";
+    modelGraph = "../cvae.pb" ;
+    modelRestore = "../checkpoint/progress-20-model.ckpt";
 
     inputNode  = "z_input";
     labelNode  = "y_input";
-    outputNode = "generator/gen_output";
+    outputNode = "decoder/x_decoder_mean_output";
     
-    inputShape = {64,100};
-    labelShape = {64,10};
+    inputShape = {100,2};
+    labelShape = {100,10};
 
     inputSize = std::accumulate(begin(inputShape), end(inputShape), 1, std::multiplies<>());
     labelSize = std::accumulate(begin(labelShape), end(labelShape), 1, std::multiplies<>());
@@ -55,7 +55,11 @@ std::vector<float> DLInference::generation() {
     inputData->set_data(inputVec, inputShape);
     eventEnergy->set_data(energies, labelShape);
 
-    m.run({inputData,eventEnergy}, generatedEvent);
+    auto xinput  = new Tensor(m,"x_input");
+    std::vector<float> xi(78400);
+    std::fill(xi.begin(), xi.end(), 5);
+    xinput->set_data(xi,{100,28,28,1});
+    m.run({xinput,inputData,eventEnergy}, generatedEvent);
 
     // Get Generated Event Tensor
     std::vector<float> result = generatedEvent->get_data<float>();

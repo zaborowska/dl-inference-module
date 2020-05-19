@@ -1,6 +1,6 @@
-#include "../foo/include/Foo/DLInference.h"
-#include "../foo/include/Foo/Model.h"
-#include "../foo/include/Foo/Tensor.h"
+#include "../inference/include/DLInference.h"
+#include "../inference/include/Model.h"
+#include "../inference/include/Tensor.h"
 #include <algorithm>
 #include <iterator>
 #include <numeric>
@@ -20,7 +20,7 @@ int main(int argc,char **argv) {
 
     // Stream Event to File
 
-    std::ofstream outFile("eventDCGAN.txt");
+    std::ofstream outFile("eventCVAE.txt");
        for (const auto e : result) outFile << e << "\n";
     return 0;
 
