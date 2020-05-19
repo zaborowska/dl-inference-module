@@ -44,4 +44,6 @@ export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Config.cmake)
 
 install(FILES ../modules/dcgan.pb ../modules/cvae.pb ../modules/graphPx.pb DESTINATION networks)
 install(FILES ../modules/checkpoint/model.b64.ckpt.data-00000-of-00001 ../modules/checkpoint/model.b64.ckpt.meta
-              ../modules/checkpoint/model.b64.ckpt.index DESTINATION networks)
+              ../modules/checkpoint/model.b64.ckpt.index ../modules/checkpoint/progress-20-model.ckpt.data-00000-of-00001
+              ../modules/checkpoint/progress-20-model.ckpt.index ../modules/checkpoint/progress-20-model.ckpt.meta
+              DESTINATION networks)
